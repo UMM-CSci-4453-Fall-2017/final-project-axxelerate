@@ -3,6 +3,8 @@
 For this project we will be implementing a search engine. We'll figure out how 
 to best store the neccessary information in MariaDB, collect data from a 
 limited number of pages, and create a simple web server and web interface for quering our database.  
+One of the things that makes or breaks a search engine is the quality of its ranking. We'll 
+likely start with a really simple ranking system and see how much time we have left after that.
 
 Technologies we expect to use:
 - [Scrapy](https://scrapy.org/) to collect data and insert
