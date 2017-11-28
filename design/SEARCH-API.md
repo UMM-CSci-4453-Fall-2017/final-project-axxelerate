@@ -37,14 +37,14 @@ Example response:
 
 ```json
 {
- prevPage: "http://localhost:80/results?query=example?page=2",
- nextPage: "http://localhost:80/results?query=example?page=3",
- results:
+ "prevPage": "http://localhost:80/results?query=example?page=2",
+ "nextPage": "http://localhost:80/results?query=example?page=3",
+ "results":
  [
    {
-     title: "This is a page",
-     link: "http://example.com/index.html",
-     snippet: "This domain is established to be used for illustrative examples"
+     "title": "This is a page",
+     "link": "http://example.com/index.html",
+     "snippet": "This domain is established to be used for illustrative examples"
    },
    { ... },
    { ... },
