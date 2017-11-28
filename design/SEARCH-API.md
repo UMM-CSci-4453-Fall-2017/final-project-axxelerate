@@ -33,11 +33,16 @@ The response will be JSON containing the following keys:
   - `link`: The full URL to the page
   - `snippet`: A string pulled from the contents of the page
   
+Example request:
+```
+"prevPage": "http://localhost:80/results?query=example?page=2",
+```
+
 Example response:
 
 ```json
 {
- "prevPage": "http://localhost:80/results?query=example?page=2",
+ "prevPage": "http://localhost:80/results?query=example?page=1",
  "nextPage": "http://localhost:80/results?query=example?page=3",
  "results":
  [
