@@ -1,3 +1,7 @@
-<p>
-  landing-page works!
-</p>
+<div>
+  Axxelerate
+</div>
+<div>
+    <input [(ngModel)]="query" (keyup.enter)="submitQuery(query)" placeholder="search....">
+    <button (click)="submitQuery(query)">Search</button>
+</div>

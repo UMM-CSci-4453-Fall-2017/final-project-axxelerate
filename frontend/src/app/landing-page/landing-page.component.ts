@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
+  query : string = "";
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  submitQuery(query : string) {
+    console.log("search is not yet implemented: '" + query + "'");
   }
 
 }
