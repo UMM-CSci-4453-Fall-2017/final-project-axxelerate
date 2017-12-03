@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,13 +10,15 @@ export class LandingPageComponent implements OnInit {
 
   query : string = "";
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
 
   submitQuery(query : string) {
-    console.log("search is not yet implemented: '" + query + "'");
+    this.router.navigate(["search"], {queryParams: {q: query, p: 1}});
   }
 
 }
