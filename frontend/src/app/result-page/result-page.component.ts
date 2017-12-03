@@ -20,17 +20,16 @@ export class ResultPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  }
-
-
-  log() {
     this.route.queryParams.subscribe(
       value => {
         var query = value["q"];
         var page = value["p"];
-        if ( query === undefined || page === undefined ) {
+        if ( query === undefined ) {
           console.log("a bad request");
         } else {
+          if ( page === undefined ) {
+            page = 0;
+          }
           this.data = this.queryService.submitQuery(query,page);
           this.results = this.data.results;
         }
@@ -38,8 +37,6 @@ export class ResultPageComponent implements OnInit {
       error => console.log("error:" + error),
       () => console.log("finished")
     );
-    console.log("A function was called");
   }
-
 
 }
