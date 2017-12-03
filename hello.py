@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, abort
+from flask_cors import cross_origin
 import json
 import example_data
 app = Flask(__name__)
@@ -8,6 +9,7 @@ def hello():
     return "Hello World"
 
 @app.route("/results")
+@cross_origin({"origins": "http://localhost:*"})
 def getResults():
     queryString = request.args.get("query")
     page = request.args.get("page")
