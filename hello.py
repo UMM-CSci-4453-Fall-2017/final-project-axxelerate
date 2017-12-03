@@ -26,7 +26,7 @@ def getResults():
 
     if (queryString == "result0"):
         result = example_data.result0
-    elif (queryString == 'result1'):
+    elif (queryString == 'result1' and page != "2"):
         result = example_data.result1_1
     elif (queryString == 'result1' and page == "2"):
         result = example_data.result1_2
