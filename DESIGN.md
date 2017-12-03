@@ -17,8 +17,9 @@ it in the DB
 ## Who 
 Developer |Points | Task
 --|---|---
-Vipul Sharma | 20 | Implement scraper to populate database
+Vipul Sharma | 5 | Implement indexing keywords using: Stemming via Edge N gram method , Inverted Indexing and Segmenting
 Laverne Schrock | 20 | Implement frontend to query database
-Both | 5 | Design REST interface to be provided by our webserver
-Both | 15 | Design and Document database tables. What indexing? How many tables? What columns? _What are the **sematics** of what we store?_
-Both | 10 | Implement the SQL queries in our webserver
+Vipul Sharma | 20 | Implement crawler and querying from keywords, scoring using Google's PageRank algorithm
+Both | 10 | Design REST interface to be provided by our webserver
+Laverne Schrock | 5 | Design and Document database tables. What indexing? How many tables? What columns? _What are the **sematics** of what we store?_
+Both | 15 | Implement the SQL queries in our webserver
