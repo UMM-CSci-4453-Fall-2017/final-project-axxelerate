@@ -23,7 +23,7 @@ import { ResultPageComponent } from './result-page/result-page.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [QueryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
