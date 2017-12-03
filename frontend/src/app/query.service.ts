@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
+import { ResultPage } from './result-page'
 
 @Injectable()
 export class QueryService {
 
-  results : ResultPage;
-
-  constructor() {
-    results = {
+  results : ResultPage = {
       nextPage: "nxt",
       prevPage: "prev",
       results: [
@@ -17,10 +15,12 @@ export class QueryService {
         }
       ]
     };
+
+  constructor() {
   }
 
-  submitQuery(query : string, page : int) : ResultPage {
-    return results;
+  submitQuery(query : string, page : number) : ResultPage {
+    return this.results;
   }
 
 }
