@@ -1,26 +1,19 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 import { ResultPage } from './result-page'
 
 @Injectable()
 export class QueryService {
 
-  results : ResultPage = {
-      nextPage: "nxt",
-      prevPage: "prev",
-      results: [
-        {
-          title: "a title",
-          link: " a link",
-          snippet: "This is demo data"
-        }
-      ]
-    };
+  private resultsUrl = "http://localhost:5000/results";
 
-  constructor() {
-  }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  submitQuery(query : string, page : number) : ResultPage {
-    return this.results;
+  submitQuery(query : string, page : number) : Observable<ResultPage> {
+    return this.http.get<ResultPage>(this.resultsUrl + "?query=" + query + "&page=" + page);
   }
 
 }

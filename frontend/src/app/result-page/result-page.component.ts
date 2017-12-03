@@ -30,8 +30,13 @@ export class ResultPageComponent implements OnInit {
           if ( page === undefined ) {
             page = 0;
           }
-          this.data = this.queryService.submitQuery(query,page);
-          this.results = this.data.results;
+          this.queryService.submitQuery(query,page).subscribe(
+            value => {
+              this.results = value.results;
+            },
+            error => {
+              console.log("Failure in fetching data:");
+            });
         }
       },
       error => console.log("error:" + error),
