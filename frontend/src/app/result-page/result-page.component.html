@@ -1,0 +1,10 @@
+<p>
+    result-page works!
+    <button (click)="log()" >foo</button>
+</p>
+
+<div *ngFor='let result of results'>
+    <div>{{result.title}}</div>
+    <div>{{result.snippet}}</div>
+    <div>{{result.link}}</div>
+</div>

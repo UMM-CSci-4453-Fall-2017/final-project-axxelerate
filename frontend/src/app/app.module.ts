@@ -6,12 +6,16 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 
+import { QueryService } from './query.service';
+
 import { AppRoutingModule } from './app-routing.module';
+import { ResultPageComponent } from './result-page/result-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ResultPageComponent
   ],
   imports: [
     BrowserModule,
