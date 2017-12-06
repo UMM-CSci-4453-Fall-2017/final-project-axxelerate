@@ -16,12 +16,14 @@ import { QueryService } from './query.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ResultPageComponent } from './result-page/result-page.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
-    ResultPageComponent
+    ResultPageComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
