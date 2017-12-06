@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 
 import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -30,6 +31,7 @@ import { ResultPageComponent } from './result-page/result-page.component';
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
+    MatListModule,
     AppRoutingModule
   ],
   providers: [QueryService],

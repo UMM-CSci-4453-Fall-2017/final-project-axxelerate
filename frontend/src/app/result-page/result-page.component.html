@@ -1,6 +1,8 @@
 <p>Results</p>
-<div *ngFor='let result of results'>
-    <div>{{result.title}}</div>
-    <div>{{result.snippet}}</div>
-    <div>{{result.link}}</div>
-</div>
+<mat-list>
+<mat-list-item *ngFor='let result of results'>
+    <a class="result-title" href="{{result.link}}" matLine>{{result.title}}</a>
+    <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a>
+    <div matLine>{{result.snippet}}</div>
+</mat-list-item>
+</mat-list>
