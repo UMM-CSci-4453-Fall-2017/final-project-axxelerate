@@ -1,7 +1,9 @@
-<div>
-  Axxelerate
+<div id="logo">
+    Axxelerate
 </div>
-<div>
-    <input [(ngModel)]="query" (keyup.enter)="submitQuery(query)" placeholder="search....">
-    <button (click)="submitQuery(query)">Search</button>
+<div class="query-form">
+    <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="query" (keyup.enter)="submitQuery(query)" placeholder="Search for...">
+    </mat-form-field><br />
+    <button mat-raised-button color="primary" (click)="submitQuery(query)">Search</button>
 </div>
