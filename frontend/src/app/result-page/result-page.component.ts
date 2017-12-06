@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { NotFoundComponent } from '../not-found/not-found.component';
 import { QueryService } from '../query.service';
 import { ResultPage } from '../result-page';
 import { Result } from '../result';
@@ -13,9 +14,11 @@ export class ResultPageComponent implements OnInit {
 
   private data : ResultPage;
   private results : [Result];
+  private badQuery: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private queryService : QueryService
   ) { }
 
@@ -25,7 +28,7 @@ export class ResultPageComponent implements OnInit {
         var query = value["q"];
         var page = value["p"];
         if ( query === undefined ) {
-          console.log("a bad request");
+          this.badQuery = true;
         } else {
           if ( page === undefined ) {
             page = 0;
