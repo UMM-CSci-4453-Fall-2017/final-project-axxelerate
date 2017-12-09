@@ -27,12 +27,9 @@ export class ResultPageComponent implements OnInit {
       value => {
         var query = value["q"];
         var page = value["p"];
-        if ( query === undefined ) {
+        if ( query === undefined || page === undefined) {
           this.badQuery = true;
         } else {
-          if ( page === undefined ) {
-            page = 0;
-          }
           this.queryService.submitQuery(query,page).subscribe(
             value => {
               this.results = value.results;
