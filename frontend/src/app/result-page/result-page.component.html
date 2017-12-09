@@ -10,11 +10,13 @@
             <button mat-raised-button color="primary" (click)="submitQuery(query)">Search</button>
         </div>
     </mat-toolbar>
-    <mat-list>
-        <mat-list-item *ngFor='let result of results'>
-            <a class="result-title" href="{{result.link}}" matLine>{{result.title}}</a>
-            <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a>
-            <div matLine>{{result.snippet}}</div>
-        </mat-list-item>
-    </mat-list>
+    <div id="result-list-wrapper">
+        <mat-list id="result-list">
+            <mat-list-item *ngFor='let result of results'>
+                <a class="result-title" href="{{result.link}}" matLine>{{result.title}}</a>
+                <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a>
+                <div matLine>{{result.snippet}}</div>
+            </mat-list-item>
+        </mat-list>
+    </div>
 </div>
