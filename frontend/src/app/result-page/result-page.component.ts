@@ -12,6 +12,7 @@ import { Result } from '../result';
 })
 export class ResultPageComponent implements OnInit {
 
+  private query : string;
   private data : ResultPage;
   private results : [Result];
   private badQuery: boolean = false;
@@ -30,6 +31,7 @@ export class ResultPageComponent implements OnInit {
         if ( query === undefined || page === undefined) {
           this.badQuery = true;
         } else {
+          this.query = query;
           this.queryService.submitQuery(query,page).subscribe(
             value => {
               this.results = value.results;
@@ -42,6 +44,10 @@ export class ResultPageComponent implements OnInit {
       error => console.log("error:" + error),
       () => console.log("finished")
     );
+  }
+
+  submitQuery(query : string) {
+    this.router.navigate(["search"], {queryParams: {q: query, p: 1}});
   }
 
 }
