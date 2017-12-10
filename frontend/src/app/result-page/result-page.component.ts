@@ -14,6 +14,14 @@ export class ResultPageComponent implements OnInit {
 
   private query : string;
   private data : ResultPage;
+
+  private prevPage : number;
+  private nextPage : number;
+  private page : number;
+
+  private hasPrev : boolean = false;
+  private hasNext : boolean = false;
+
   private results : [Result];
   private badQuery: boolean = false;
 
@@ -32,9 +40,15 @@ export class ResultPageComponent implements OnInit {
           this.badQuery = true;
         } else {
           this.query = query;
+          this.page = page;
           this.queryService.submitQuery(query,page).subscribe(
             value => {
               this.results = value.results;
+              this.hasPrev = (value.prevPage !== undefined);
+              this.hasNext = (value.nextPage !== undefined);
+
+              this.prevPage = (+this.page) - 1;
+              this.nextPage = (+this.page) + 1;
             },
             error => {
               console.log("Failure in fetching data:");

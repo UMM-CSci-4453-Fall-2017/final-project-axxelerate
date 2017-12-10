@@ -18,5 +18,20 @@
                 <div matLine>{{result.snippet}}</div>
             </mat-list-item>
         </mat-list>
+
+        <span *ngIf="hasPrev">
+            <a  mat-button routerLink="/search" [queryParams]="{q : query, p : prevPage}">Previous Page</a>
+        </span>
+        <span *ngIf="!hasPrev">
+            <button mat-button disabled>Previous Page</button>
+        </span>
+
+        <span *ngIf="hasNext">
+            <a mat-button routerLink="/search" [queryParams]="{q : query, p : nextPage}">Next Page</a>
+        </span>
+        <span *ngIf="!hasNext">
+            <button mat-button disabled>Next Page</button>
+        </span>
+
     </div>
 </div>
