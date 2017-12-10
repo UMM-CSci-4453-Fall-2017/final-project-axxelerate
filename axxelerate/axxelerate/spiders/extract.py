@@ -1,6 +1,7 @@
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 from scrapy.item import Item, Field
+import modify_query
 
 class url_item(Item):
     url= Field()
@@ -19,5 +20,10 @@ class axxelerate_spider(CrawlSpider):
         tags = ["h1", "h2", "h3", "h4", "h5", "h6", "title", "article", "div",
                 "blockquote", "td", "li", "a", "p", "span", "strong", "bold"]
         for tag in tags:
-            item['keywords'].append(response.xpath("//%s/text()" % (tag)).extract())
+            texts = response.xpath("//%s/text()" % (tag)).extract()
+            for text in texts:
+                text =  text.encode("ascii", "ignore")
+                result = modify_query.query(text)
+                item['keywords'] = item['keywords'] + result
+        item['keywords'] = set(item['keywords'])
         return item
