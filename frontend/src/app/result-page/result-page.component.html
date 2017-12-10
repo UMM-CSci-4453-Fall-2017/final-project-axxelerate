@@ -12,6 +12,9 @@
     </mat-toolbar>
     <div id="result-list-wrapper">
         <mat-list id="result-list">
+            <mat-list-item *ngIf="results.length === 0">
+                No results. Modify your query and try again.
+            </mat-list-item>
             <mat-list-item *ngFor='let result of results'>
                 <a class="result-title" href="{{result.link}}" matLine>{{result.title}}</a>
                 <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a>

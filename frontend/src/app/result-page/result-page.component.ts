@@ -22,7 +22,7 @@ export class ResultPageComponent implements OnInit {
   private hasPrev : boolean = false;
   private hasNext : boolean = false;
 
-  private results : [Result];
+  private results : Result[] = [];
   private badQuery: boolean = false;
 
   constructor(
