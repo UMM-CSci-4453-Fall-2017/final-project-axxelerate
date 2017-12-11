@@ -6,6 +6,7 @@ import modify_query
 class url_item(Item):
     url= Field()
     keywords = Field()
+    title = Field()
 
 class axxelerate_spider(CrawlSpider):
     name = 'axxelerate'
@@ -25,5 +26,6 @@ class axxelerate_spider(CrawlSpider):
                 text =  text.encode("ascii", "ignore")
                 result = modify_query.query(text)
                 item['keywords'] = item['keywords'] + result
+        item['title'] = response.xpath("//title/text()").extract_first()
         item['keywords'] = set(item['keywords'])
         return item

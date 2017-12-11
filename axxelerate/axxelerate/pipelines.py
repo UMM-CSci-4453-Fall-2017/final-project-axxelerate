@@ -19,8 +19,8 @@ class AxxeleratePipeline(object):
     def process_item(self, item, spider):
         try:
             with connection.cursor() as cursor:
-                sql = "INSERT INTO `pages` (`url`) VALUES (%s)"
-                cursor.execute(sql, (item['url']))
+                sql = "INSERT INTO `pages` (`url`, `title`) VALUES (%s, %s)"
+                cursor.execute(sql, (item['url'], item['title']))
             connection.commit()
         except:
             pass
