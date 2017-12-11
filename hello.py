@@ -12,7 +12,7 @@ def hello():
 @cross_origin({"origins": "http://localhost:*"})
 def getResults():
     queryString = request.args.get("query")
-    page = request.args.get("page")
+    f = request.args.get("from")
     if (queryString == None):
         return "Bad stuff!"
 
@@ -26,9 +26,9 @@ def getResults():
 
     if (queryString == "result0"):
         result = example_data.result0
-    elif (queryString == 'result1' and page != "2"):
+    elif (queryString == 'result1' and f != "2"):
         result = example_data.result1_1
-    elif (queryString == 'result1' and page == "2"):
+    elif (queryString == 'result1' and f == "2"):
         result = example_data.result1_2
     else:
         result = {
