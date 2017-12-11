@@ -9,24 +9,24 @@ Our REST API will have a single endpoint.
 
 This endpoint requires the following query paramenters
 
-- `?query=` : A string specifying the query for the database
-- `?page=` : Which page of the results to view (see below). If not included,
-  behaves as if `?page=1`. In general, you should leave this off and then read
-  the `nextPage` key from the result.
+- `query=` : A string specifying the query for the database
+- `from=` : How deep to page into the results. If left off, assumed
+  to be `0`.
 
 Queries can return massive amounts of results and returning them all in a single
 query may be problematic. In addition, an interface for this would probably only
 want to display the first few results so downloading all of them would be a
-waste of bandwidth. Our endpoint therfore only returns 10 results at a time. To
-fetch the first page of results use `?page=1`, to fetch the second use `?page=2`,
-etc.
+waste of bandwidth. Our endpoint therefore only returns 10 results at a time. To
+fetch the first page of results simply send the query, to fetch the second use
+read the `nextFrom` and use it to set the `from` query param on the next call.
 
 The response will be JSON containing the following keys:
 
-- `nextPage`: If there are additional pages, this is a full URL to fetch the
-  next page of results. Otherwise will be absent or `null`.
-- `prevPage`: If the request was not for the first page, this will refer to the 
-  previous page.
+- `nextFrom`: If there are additional pages, this will be the value of `from` to use
+  on a subsequent request in order to get the next page. If there is not a next page,
+  will be `null`. When not null, it is a string.
+- `prevFrom`: If the request was not for the first page, this will refer to the `from`
+   value needed to fetch the previous page. When not null, it is a string.
 - `results`: An array of objects describing one search result. There will be at
   most 10 elements in this list. Each of these objects has the following keys
   - `title`: The title of the page being linked to
@@ -35,15 +35,15 @@ The response will be JSON containing the following keys:
   
 Example request:
 ```
-"prevPage": "http://localhost:80/results?query=example?page=2",
+GET http://localhost:80/results?query=example?from=2,
 ```
 
 Example response:
 
 ```json
 {
- "prevPage": "http://localhost:80/results?query=example?page=1",
- "nextPage": "http://localhost:80/results?query=example?page=3",
+ "prevFrom": "1",
+ "nextFrom": "3",
  "results":
  [
    {
@@ -63,5 +63,3 @@ Example response:
  ]
 }
 ```
-
-This pagination scheme is not really following standards, but it will do.
