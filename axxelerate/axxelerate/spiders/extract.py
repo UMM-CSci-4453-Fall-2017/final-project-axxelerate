@@ -22,7 +22,7 @@ class axxelerate_spider(CrawlSpider):
         for tag in tags:
             texts = response.xpath("//%s/text()" % (tag)).extract()
             for text in texts:
-                text =  text.encode("ascii", "ignore")
+                text =  text.encode("latin1", "ignore")
                 result = modify_query.query(text)
                 item['keywords'] = item['keywords'] + result
         item['title'] = response.xpath("//title/text()").extract_first()
