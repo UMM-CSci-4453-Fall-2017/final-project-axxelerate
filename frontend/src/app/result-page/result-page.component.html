@@ -1,0 +1,40 @@
+<div *ngIf="badQuery">
+    <app-not-found></app-not-found>
+</div>
+<div *ngIf="!badQuery">
+    <mat-toolbar>
+        <div class="query-form">
+            <mat-form-field class="full-width">
+                <input matInput [(ngModel)]="query" (keyup.enter)="submitQuery(query)">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="submitQuery(query)">Search</button>
+        </div>
+    </mat-toolbar>
+    <div id="result-list-wrapper">
+        <mat-list id="result-list">
+            <mat-list-item *ngIf="results.length === 0">
+                No results. Modify your query and try again.
+            </mat-list-item>
+            <mat-list-item *ngFor='let result of results'>
+                <a class="result-title" href="{{result.link}}" matLine>{{result.title}}</a>
+                <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a>
+                <div matLine>{{result.snippet}}</div>
+            </mat-list-item>
+        </mat-list>
+
+        <span *ngIf="hasPrev">
+            <a  mat-button routerLink="/search" [queryParams]="{q : query, p : prevPage}">Previous Page</a>
+        </span>
+        <span *ngIf="!hasPrev">
+            <button mat-button disabled>Previous Page</button>
+        </span>
+
+        <span *ngIf="hasNext">
+            <a mat-button routerLink="/search" [queryParams]="{q : query, p : nextPage}">Next Page</a>
+        </span>
+        <span *ngIf="!hasNext">
+            <button mat-button disabled>Next Page</button>
+        </span>
+
+    </div>
+</div>
