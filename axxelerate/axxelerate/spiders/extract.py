@@ -30,6 +30,7 @@ class axxelerate_spider(CrawlSpider):
         item['title'] = response.xpath("//title/text()").extract_first()
         item['keywords'] = set(item['keywords'])
         item['linksTo'] = []
-        for link in LxmlLinkExtractor(allow=(self.allowed_domains),deny = ()).extract_links(response):
-            item['linksTo'].append(link.url)
+        for link in LxmlLinkExtractor(allow=(),deny = ()).extract_links(response):
+            if link.url.startswith('https://en.wikipedia.org'):
+                item['linksTo'].append(link.url)
         return item
