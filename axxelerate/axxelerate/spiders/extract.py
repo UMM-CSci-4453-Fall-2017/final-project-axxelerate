@@ -7,6 +7,7 @@ class url_item(Item):
     url= Field()
     keywords = Field()
     title = Field()
+    linksTo = Field()
 
 class axxelerate_spider(CrawlSpider):
     name = 'axxelerate'
@@ -28,4 +29,7 @@ class axxelerate_spider(CrawlSpider):
                 item['keywords'] = item['keywords'] + result
         item['title'] = response.xpath("//title/text()").extract_first()
         item['keywords'] = set(item['keywords'])
+        item['linksTo'] = []
+        for link in LxmlLinkExtractor(allow=(self.allowed_domains),deny = ()).extract_links(response):
+            item['linksTo'].append(link.url)
         return item
