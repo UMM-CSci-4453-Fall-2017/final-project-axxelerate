@@ -1,7 +1,7 @@
 import { Result } from './result'
 
 export interface ResultPage {
-  prevPage : string,
-  nextPage : string,
+  prevFrom : string,
+  nextFrom : string,
   results : [Result]
 }
