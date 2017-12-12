@@ -10,7 +10,7 @@ result0= {
 }
 
 result1_1 = {
-    "nextPage" : "http://localhost:5000/results?query=result1&page=2",
+    "nextFrom" : "2",
     "results" :
     [
         {
@@ -67,7 +67,7 @@ result1_1 = {
 }
 
 result1_2 = {
-    "prevPage" : "http://localhost:5000/results?query=result1&page=1",
+    "prevFrom" : "1",
     "results" :
     [
         {

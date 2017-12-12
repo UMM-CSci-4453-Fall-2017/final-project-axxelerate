@@ -12,8 +12,8 @@ export class QueryService {
     private http: HttpClient
   ) { }
 
-  submitQuery(query : string, page : number) : Observable<ResultPage> {
-    return this.http.get<ResultPage>(this.resultsUrl + "?query=" + query + "&page=" + page);
+  submitQuery(query : string, f : number) : Observable<ResultPage> {
+    return this.http.get<ResultPage>(this.resultsUrl + "?query=" + query + "&from=" + f);
   }
 
 }

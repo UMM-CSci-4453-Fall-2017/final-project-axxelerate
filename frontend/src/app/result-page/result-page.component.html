@@ -23,16 +23,16 @@
         </mat-list>
         
         <span class="previous-button" *ngIf="hasPrev">
-            <a  mat-raised-button color="primary" routerLink="/search" [queryParams]="{q : query, p : prevPage}">Previous Page</a>
+            <a  mat-raised-button color="primary" routerLink="/search" [queryParams]="{q : query, f : prevFrom}">Previous</a>
         </span>
         <span class="previous-button" *ngIf="!hasPrev">
-            <button mat-raised-button disabled>Previous Page</button>
+            <button mat-raised-button disabled>Previous</button>
         </span>
         <span class="next-button" *ngIf="hasNext">
-            <a mat-raised-button color="primary" routerLink="/search" [queryParams]="{q : query, p : nextPage}">Next Page</a>
+            <a mat-raised-button color="primary" routerLink="/search" [queryParams]="{q : query, f : nextFrom}">Next</a>
         </span>
         <span class="next-button" *ngIf="!hasNext">
-            <button mat-raised-button disabled>Next Page</button>
+            <button mat-raised-button disabled>Next</button>
         </span>
 
     </div>
