@@ -18,7 +18,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   submitQuery(query : string) {
-    this.router.navigate(["search"], {queryParams: {q: query, f: 1}});
+    this.router.navigate(["search"], {queryParams: {q: query}});
   }
 
 }

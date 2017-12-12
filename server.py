@@ -20,42 +20,44 @@ def hello():
 @cross_origin({"origins": "http://localhost:*"})
 def getResults():
     queryString = request.args.get("query")
-    page = request.args.get("page")
+    f = request.args.get("from")
+
+    sql_request = ""
+    args = ()
+
     if (queryString == None):
         return "Bad stuff!"
-
-    #if (queryString == None) :
-    #     page = 1
-    # else:
-    #     # TODO: actually parse the string to an int
-    #     page = page
-
-    # TODO: At some point we need to break down the query into keywords
-    #       For now, we'll assume that it is a single keyword
-
-    # if (queryString == "result0"):
-    #     result = example_data.result0
-    # elif (queryString == 'result1' and page != "2"):
-    #     result = example_data.result1_1
-    # elif (queryString == 'result1' and page == "2"):
-    #     result = example_data.result1_2
-    # else:
-    #     result = {
-    #         "results" : []
-    #     }
+    if (f == None):
+        sql_request = "SELECT url, title, pagerank FROM keywords LEFT JOIN pages ON pageID = ID WHERE word = %s ORDER BY pagerank DESC LIMIT 11";
+        args = (queryString)
+    else:
+        sql_request = "SELECT url, title, pagerank FROM keywords LEFT JOIN pages ON pageID = ID WHERE word = %s and pagerank <= %s ORDER BY pagerank DESC LIMIT 11";
+        args = (queryString, f)
 
     result = None
 
     with connection.cursor() as cursor:
-        sql_request = "SELECT url, title FROM keywords LEFT JOIN pages ON pageID = ID WHERE word = %s";
-        cursor.execute(sql_request, queryString)
-        raw_results = cursor.fetchall()
+        cursor.execute(sql_request, args)
+        raw_results = cursor.fetchmany(10)
+
+
 
         result = {
-            "nextPage" : "",
-            "prevPage" : "",
             "results" : []
         }
+
+        last = cursor.fetchone()
+        if (last != None):
+            result["nextFrom"] = str(last['pagerank'])
+
+        if (len(raw_results) > 0):
+            currentStarter = raw_results[0]["pagerank"]
+            sql_fetch_prev = "SELECT url, title, pagerank FROM keywords LEFT JOIN pages ON pageID = ID WHERE word = %s and pagerank >= %s ORDER BY pagerank LIMIT 12";
+            cursor.execute(sql_fetch_prev, (queryString, currentStarter))
+            results = cursor.fetchall()
+            if (len(results) == 12 or len(results) == 11):
+                result["prevFrom"] = str(results[10]["pagerank"])
+
 
         for page in raw_results:
             p = {

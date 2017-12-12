@@ -36,7 +36,7 @@ export class ResultPageComponent implements OnInit {
       value => {
         var query = value["q"];
         var fromId = value["f"];
-        if ( query === undefined || fromId === undefined) {
+        if ( query === undefined ) {
           this.badQuery = true;
         } else {
           this.query = query;
@@ -61,7 +61,7 @@ export class ResultPageComponent implements OnInit {
   }
 
   submitQuery(query : string) {
-    this.router.navigate(["search"], {queryParams: {q: query, f: 1}});
+    this.router.navigate(["search"], {queryParams: {q: query}});
   }
 
 }
