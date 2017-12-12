@@ -1,5 +1,6 @@
 import pymysql.cursors
 import credentials
+import hashlib
 
 
 
@@ -33,9 +34,10 @@ class AxxeleratePipeline(object):
         try:
             with self.connection.cursor() as cursor:
 
-                pageID = self.insert_url(item['url'], cursor)
-                sql_url_title = "UPDATE `pages` SET `title` = %s WHERE `ID` = %s"
-                cursor.execute(sql_url_title, (item['title'], pageID))
+                urlHash = hashlib.md5(item['url']).hexdigest()
+                sql_url_title = "INSERT INTO `pages` (`url`, `title`, `urlHash`) VALUES (%s,%s,%s)"
+                cursor.execute(sql_url_title, (item['url'], item['title'], urlHash))
+                pageID = cursor.lastrowid
 
                 placeHolders = []
                 valuesToInsert = []
@@ -49,10 +51,16 @@ class AxxeleratePipeline(object):
                     sql_keywords = "INSERT INTO `keywords` (`word`, `pageID`) VALUES " + (",".join(placeHolders))
                     cursor.execute(sql_keywords, valuesToInsert)
 
+                linksToInsert = []
+                placeHolders = []
                 for url in item['linksTo']:
-                    toID = self.insert_url(url, cursor);
-                    sql_associate_link = "INSERT INTO `linksTo` (`fromID`, `toID`) VALUES (%s, %s)"
-                    cursor.execute(sql_associate_link, (pageID, toID))
+                    linksToInsert.append(urlHash)
+                    linksToInsert.append(hashlib.md5(url).hexdigest())
+                    placeHolders.append("(%s,%s)")
+
+                if len(placeHolders) > 0:
+                    sql_links = "INSERT INTO `linksTo` (`fromHash`, `toHash`) VALUES " + (",".join(placeHolders))
+                    cursor.execute(sql_links, linksToInsert)
 
             self.connection.commit()
 
