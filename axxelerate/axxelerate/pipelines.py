@@ -49,6 +49,11 @@ class AxxeleratePipeline(object):
                     sql_keywords = "INSERT INTO `keywords` (`word`, `pageID`) VALUES " + (",".join(placeHolders))
                     cursor.execute(sql_keywords, valuesToInsert)
 
+                for url in item['linksTo']:
+                    toID = self.insert_url(url, cursor);
+                    sql_associate_link = "INSERT INTO `linksTo` (`fromID`, `toID`) VALUES (%s, %s)"
+                    cursor.execute(sql_associate_link, (pageID, toID))
+
             self.connection.commit()
 
         except pymysql.OperationalError as e:
