@@ -51,14 +51,15 @@ class AxxeleratePipeline(object):
 
             self.connection.commit()
 
-        except pymysql.OperationError as e:
+        except pymysql.OperationalError as e:
             print("caught pymysql.OperationError: ")
             print(e)
             if e.errno == 2006:
                 print("reconnecting to DB")
                 connectToDb()
                 process_item(self, item, spider)
-        except: 
+        except Exception as e: 
             print("GGGGRRRRRRRRRRRRRRRRRRRR")
+            print(e)
             pass
         return item
