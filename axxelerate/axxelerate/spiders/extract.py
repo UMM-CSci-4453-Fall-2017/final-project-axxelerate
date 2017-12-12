@@ -19,12 +19,11 @@ class axxelerate_spider(CrawlSpider):
         item = url_item()
         item['url'] = response.url
         item['keywords'] = []
-        tags = ["h1", "h2", "h3", "h4", "h5", "h6", "title", "article", "div",
-                "blockquote", "td", "li", "a", "p", "span", "strong", "bold"]
+        tags = ["h1", "title", "article", "div", "blockquote", "td", "li", "p", "span", "strong", "b", "i"]
         for tag in tags:
             texts = response.xpath("//%s/text()" % (tag)).extract()
             for text in texts:
-                text =  text.encode("ascii", "ignore")
+                text =  text.encode("latin1", "ignore")
                 result = modify_query.query(text)
                 item['keywords'] = item['keywords'] + result
         item['title'] = response.xpath("//title/text()").extract_first()
