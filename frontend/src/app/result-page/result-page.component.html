@@ -17,8 +17,8 @@
             </mat-list-item>
             <mat-list-item *ngFor='let result of results'>
                 <a class="result-title" href="{{result.link}}" matLine>{{result.title}}</a>
-                <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a>
-                <div matLine>{{result.snippet}}</div>
+                <a class="result-link" href="{{result.link}}" matLine>{{result.link}}</a><br>
+                <mat-chip-list matLine><mat-chip color="primary" selected="true" *ngFor='let word of result.chipwords'>{{word}}</mat-chip></mat-chip-list>
             </mat-list-item>
         </mat-list>
         
