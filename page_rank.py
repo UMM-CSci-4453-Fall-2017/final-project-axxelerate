@@ -4,10 +4,14 @@ import sys
 import pymysql.cursors
 import credentials
 import pprint
+from functools import partial
+from multiprocessing import Pool
 
 damping = 0.85
 
 def main():
+
+    pool = Pool(8)
 
     pp = pprint.PrettyPrinter(indent=4)
 
@@ -48,12 +52,24 @@ def main():
         avg_diff = float("inf")
 
         while avg_diff > 0.00001:
-            export_strengths = {n: export_strength(nodes_and_ranks, links, n) for n in links}
-            new_ranks = {n: compute_new_pr(export_strengths, links, n) for n in links}
+            print("computing strengths")
+            export_strengths_list = pool.map(partial(export_strength, prev_ranks=nodes_and_ranks, links=links), links)
+            print("computed strengths, converting to dict")
+            export_strengths = dict(export_strengths_list)
+
+
+            print("computing new pageranks")
+            new_ranks_list = pool.map(partial(compute_new_pr, export_strengths=export_strengths, links=links), links)
+
+            print("converting new ranks to dict")
+            new_ranks = dict(new_ranks_list)
+
+            print("computing diffs")
             differences = []
             for node in new_ranks:
                 diff =  abs(new_ranks[node] - nodes_and_ranks[node])
                 differences.append(diff)
+            print("computing average")
             avg_diff = sum(differences)/float(len(differences))
             nodes_and_ranks = new_ranks
             print("%s %s" % (iteration, avg_diff))
@@ -68,20 +84,20 @@ def main():
     connection.commit()
 
 
-def export_strength(prev_ranks, links, node):
+def export_strength(node, prev_ranks, links):
     num_out = len(links[node])
     if num_out == 0:
-        return 0
+        return [node, 0]
     else:
-        return prev_ranks[node] / num_out
+        return [node, prev_ranks[node] / num_out]
 
-def compute_new_pr(export_strengths, links, node):
+def compute_new_pr(node, export_strengths, links):
     contributions = 0
     for n in links:
         if node in links[n]:
             contributions += export_strengths[n]
     new_pr = (1 - damping) + (damping * contributions)
-    return new_pr
+    return [node, new_pr]
 
 if __name__ == "__main__":
     main()
