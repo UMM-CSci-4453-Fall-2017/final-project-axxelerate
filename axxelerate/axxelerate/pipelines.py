@@ -19,10 +19,17 @@ class AxxeleratePipeline(object):
     def process_item(self, item, spider):
         try:
             with self.connection.cursor() as cursor:
-                sql_url_title = "INSERT INTO `pages` (`url`, `title`) VALUES (%s, %s)"
-                cursor.execute(sql_url_title, (item['url'], item['title']))
+                sql_url_filter = "SELECT `ID` FROM pages WHERE `url` = %s"
+                cursor.execute(sql_url_filter, item['url'])
 
-                pageID = cursor.lastrowid
+                pageID = 0
+                result = cursor.fetchone()
+                if (result == None):
+                    sql_url_title = "INSERT INTO `pages` (`url`, `title`) VALUES (%s, %s)"
+                    cursor.execute(sql_url_title, (item['url'], item['title']))
+                    pageID = cursor.lastrowid
+                else:
+                    pageID = result["ID"]
 
                 placeHolders = []
                 valuesToInsert = []
@@ -45,4 +52,7 @@ class AxxeleratePipeline(object):
                 print("reconnecting to DB")
                 connectToDb()
                 process_item(self, item, spider)
+        except: 
+            print("GGGGRRRRRRRRRRRRRRRRRRRR")
+            pass
         return item
