@@ -28,10 +28,10 @@ def getResults():
     if (queryString == None):
         return "Bad stuff!"
     if (f == None):
-        sql_request = "SELECT url, title, pagerank FROM keywords LEFT JOIN pages ON pageID = ID WHERE word = %s ORDER BY pagerank DESC LIMIT 11";
+        sql_request = "SELECT url, title, chipwords, pagerank FROM keywords LEFT JOIN pages ON pageID = pages.ID LEFT JOIN chipwords ON chipwords.ID = pages.ID WHERE word = %s ORDER BY pagerank DESC LIMIT 11"
         args = (queryString)
     else:
-        sql_request = "SELECT url, title, pagerank FROM keywords LEFT JOIN pages ON pageID = ID WHERE word = %s and pagerank <= %s ORDER BY pagerank DESC LIMIT 11";
+        sql_request = "SELECT url, title, chipwords, pagerank FROM keywords LEFT JOIN pages ON pageID = pages.ID LEFT JOIN chipwords ON chipwords.ID = pages.ID WHERE word = %s and pagerank <= %s ORDER BY pagerank DESC LIMIT 11";
         args = (queryString, f)
 
     result = None
@@ -63,8 +63,26 @@ def getResults():
             p = {
                 "snippet" : "",
                 "link" : page["url"].decode("latin1"),
-                "title" : page["title"].decode("latin1")
+                "title" : page["title"].decode("latin1"),
+                "chipwords": page["chipwords"].decode("latin1").split(',')[:2]
             }
             result["results"].append(p)
 
     return Response(json.dumps(result), mimetype="application/json")
+
+def getKeywords():
+    queryString = request.args.get("query")
+    sql_request = ""
+    args = ()
+
+    if (queryString == None):
+        return "Bad stuff!"
+    else:
+        sql_request = "SELECT chipwords,title FROM chipwords,pages WHERE title  = %s and  <= %s ORDER BY pagerank DESC LIMIT 11";
+        args = (queryString, f)
+
+    result = None
+
+    with connection.cursor() as cursor:
+        cursor.execute(sql_request, args)
+

@@ -18,6 +18,7 @@ import { QueryService } from './query.service';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultPageComponent } from './result-page/result-page.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatButtonModule,
     MatListModule,
     MatToolbarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatChipsModule
   ],
   providers: [QueryService],
   bootstrap: [AppComponent]
